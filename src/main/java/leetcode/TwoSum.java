@@ -18,8 +18,8 @@ public class TwoSum {
             tmp = target - nums[i];
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[j] == tmp) {
-                    result[0] = nums[i];
-                    result[1] = nums[j];
+                    result[0] = i;
+                    result[1] = j;
                     return result;
                 }
             }

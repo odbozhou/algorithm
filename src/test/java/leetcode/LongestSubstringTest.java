@@ -8,9 +8,9 @@ import org.junit.Test;
 public class LongestSubstringTest {
     @Test
     public void lengthOfLongestSubstring() throws Exception {
-        String s = "String";
-        System.out.println(s.substring(0, 1));
-//        LongestSubstring.lengthOfLongestSubstring(s);
+        String s = "au";
+//        System.out.println(s.substring(0, 1));
+        System.out.println(LongestSubstring.lengthOfLongestSubstring(s));
     }
 
 }
