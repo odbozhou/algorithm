@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 /**
  * Created by zhoubo on 2017/4/11.
@@ -37,6 +36,12 @@ public class LongestSubstring {
         return count;
     }
 
+    /**
+     *  //dedv
+     *  从第一个字符
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstring1(String s) {
         char[] chars = s.toCharArray();
         int length = chars.length;
@@ -45,6 +50,7 @@ public class LongestSubstring {
         }
         Map<String, Integer> resultMap = new LinkedHashMap<String, Integer>();
         int count = 0;
+        //记录上一轮不重复的字符串
         String tmpStr = null;
         for (int i = 0; i < length; i++) {
             StringBuilder sb = new StringBuilder();
@@ -55,6 +61,7 @@ public class LongestSubstring {
                 sb.append(tmpStr);
                 tmpStr = null;
             }
+            //记录i下一次的偏移量
             int countj = 1;
             for (int j = i + 1; j < chars.length; j++) {
                 String sub = s.substring(j, j + 1);
