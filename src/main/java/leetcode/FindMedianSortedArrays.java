@@ -18,7 +18,7 @@ public class FindMedianSortedArrays {
             int mid = 0;
             if (0 == num.length % 2) {
                 mid = num.length / 2;
-                return (num[mid] + num[mid + 1]) / 2.0;
+                return (num[mid] + num[mid - 1]) / 2.0;
             } else {
                 mid = num.length / 2;
                 return num[mid];
@@ -60,7 +60,7 @@ public class FindMedianSortedArrays {
         int mid = 0;
         if (0 == tmpArr.length % 2) {
             mid = tmpArr.length / 2;
-            return (tmpArr[mid] + tmpArr[mid + 1]) / 2.0;
+            return (tmpArr[mid] + tmpArr[mid - 1]) / 2.0;
         } else {
             mid = tmpArr.length / 2;
             return tmpArr[mid];
