@@ -11,9 +11,9 @@ public class ZigZagConversionTest {
     @Test
     public void convert() throws Exception {
         ZigZagConversion zigZagConversion = new ZigZagConversion();
-        String s = "PAYPALISHIRING";
+        String s = "ABCDE";
         int numRows = 3;
-        zigZagConversion.convert(s, 3);
+        System.out.println(zigZagConversion.convert(s, numRows));
     }
 
 }
