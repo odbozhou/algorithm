@@ -5,9 +5,15 @@ package leetcode;
  */
 public class StringToInteger {
     public int myAtoi(String str) {
-        str = str.trim();
         if (str.equals("")) {
             return 0;
+        }
+        str = str.trim();
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+                str = str.substring(0, i);
+                break;
+            }
         }
         int result = 0;
         int signed = 1;
@@ -26,6 +32,11 @@ public class StringToInteger {
             }
             result = result + (str.charAt(i) - '1' + 1) * (int)(Math.pow(10, len - i - 1));
         }
-        return result * signed;
+        if (signed == 1) {
+            result = Math.abs(result);
+        } else {
+            result = result * -1;
+        }
+        return result;
     }
 }

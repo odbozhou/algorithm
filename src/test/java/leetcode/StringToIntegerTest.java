@@ -11,7 +11,7 @@ public class StringToIntegerTest {
     @Test
     public void myAtoi() throws Exception {
         StringToInteger stringToInteger = new StringToInteger();
-        String str = "  -0012a42";
+        String str = "2147483648";
         System.out.println(stringToInteger.myAtoi(str));
     }
 
