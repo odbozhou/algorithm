@@ -7,8 +7,6 @@
     <groupId>com.zhoubo</groupId>
     <artifactId>algorithms</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -21,6 +19,11 @@
             <artifactId>junit</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 </project>
