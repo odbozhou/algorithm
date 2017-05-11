@@ -2,6 +2,9 @@ package leetcode;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.net.Inet4Address;
+
 /**
  * Created by zhoubo on 2017/4/11.
  */
@@ -23,6 +26,15 @@ public class AddTwoNumbersTest {
             System.out.println(result.val);
             result = result.next;
         }
+
+
+        String name = System.getProperty("user.dir");
+        name = name.substring(name.lastIndexOf(File.separator) + 1);
+        name = name+"_"+ Inet4Address.getLocalHost().toString().replaceAll("/", "_");
+        System.out.println(name);
+
+
+        System.out.println(4 >> 1);
     }
 
 }
