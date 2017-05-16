@@ -1,6 +1,9 @@
 package datastructure;
 
+import java.util.ArrayDeque;
 import java.util.Comparator;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by zhoubo on 2017/5/13.
@@ -112,6 +115,23 @@ public class BinaryTree<T> implements Tree<T>{
         binaryTreeNode = parent.righChild;
         subsequentTraversal(binaryTreeNode, parent);
         System.out.println(head.value);
+    }
+
+    public void levelOrderTraversal() {
+        BinaryTreeNode<T> binaryTreeNode = binaryTreeNodeHead;
+        Queue<BinaryTreeNode<T>> queue = new ArrayBlockingQueue<BinaryTreeNode<T>>(20);
+        queue.add(binaryTreeNode);
+        while (!queue.isEmpty()) {
+            BinaryTreeNode<T> binaryTreeNode1 = queue.remove();
+            System.out.println(binaryTreeNode1.value);
+            if (null != binaryTreeNode1.leftChild) {
+                queue.add(binaryTreeNode1.leftChild);
+            }
+            if (null != binaryTreeNode1.righChild) {
+                queue.add(binaryTreeNode1.righChild);
+            }
+        }
+
     }
 
 

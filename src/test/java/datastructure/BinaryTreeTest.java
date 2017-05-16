@@ -55,6 +55,8 @@ public class BinaryTreeTest {
         binaryTree.preorderTraversal(binaryTree.binaryTreeNodeHead, null);
         System.out.println("后序遍历：");
         binaryTree.subsequentTraversal(binaryTree.binaryTreeNodeHead, null);
+        System.out.println("层序遍历：");
+        binaryTree.levelOrderTraversal();
     }
 
 }
