@@ -52,8 +52,8 @@ public class MiniList<T> {
         if (null != comparator) {
             return comparator.compare(a, b);
         } else {
-            Comparator<T> comp = (Comparator<T>)a;
-            return comp.compare(a, b);
+            Comparable<T> comp = (Comparable<T>)a;
+            return comp.compareTo(b);
         }
     }
 
