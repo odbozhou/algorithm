@@ -48,9 +48,34 @@ public class CowSolitaire {
             System.out.println();
         }
         System.out.println();
-        int c = 0;
-        int r = 3;
-
+        int c = 1;
+        int r = 4;
+        //广度优先搜索
+        int sum = 0;
+//        Queue<Integer> queue = new LinkedBlockingQueue<Integer>(50);
+//        queue.add(tmp[r][c]);
+        System.out.print(arr[r - 1][c - 1] + " -> ");
+//        System.out.print(tmp[r][c] + " -> ");
+        sum += tmp[r][c];
+        while (c != 4 && r != 1) {
+            int a = tmp[r - 1][c];
+            int b = tmp[r][c + 1];
+            if (a >= b) {
+                r--;
+                System.out.print(arr[r - 1][c - 1] + " -> ");
+//                System.out.print(tmp[r][c] + " -> ");
+                sum += tmp[r][c];
+            } else {
+                c++;
+                System.out.print(arr[r - 1][c - 1] + " -> ");
+//                System.out.print(tmp[r][c] + " -> ");
+                sum += tmp[r][c];
+            }
+        }
+        System.out.println(arr[0][3]);
+        sum += tmp[1][4];
+        System.out.println("sum = " + sum);
+        //动态规划，二维数组f[i][j]标识A[N][1] 到A[i][j]的大长度
         int[][] f = new int[n + 2][n + 2];
         for (int i = 0; i < n + 2; i++) {
             f[i][0] = 0;
