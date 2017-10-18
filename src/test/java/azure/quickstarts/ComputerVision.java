@@ -1,8 +1,11 @@
+/*
 package azure.quickstarts;
 
+*/
 /**
  * Created by zhoubo on 2017/7/7.
- */
+ *//*
+
 
 // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
 
@@ -131,3 +134,4 @@ public class ComputerVision {
         }
     }
 }
+*/
