@@ -10,7 +10,7 @@ public class L717 {
         int max = 0;
 //        List<BinaryTreeNode> binaryTreeNodes = new LinkedList<BinaryTreeNode>();
         BinaryTreeNode[] binaryTreeNodes = new BinaryTreeNode[n];
-        for (int j = 0 ; j <= n - 2; j++) {
+        for (int j = 0; j <= n - 2; j++) {
             BinaryTreeNode parent;
             BinaryTreeNode child;
             if (null == binaryTreeNodes[E[2 * j] - 1]) {
@@ -38,7 +38,7 @@ public class L717 {
         }
         System.out.println("head = " + node.value);
         head = node;
-        BinaryTree binaryTree = new BinaryTree();
+        BinaryTree binaryTree = new BinaryTree(new int[]{1, 2, 3});
         System.out.println("preorderTraversal");
         binaryTree.preorderTraversal(head);
         System.out.println("inorderTraversal");
@@ -67,8 +67,8 @@ public class L717 {
         binaryTree.inorderTraversal(head);
         System.out.println("postorderTraversal");
         binaryTree.postorderTraversal(head);*/
-        int[] a = new int[] {1, 2, 3, 4, 5};
-        int[] e = new int[] {1, 2, 1, 3, 2, 4, 2, 5};
+        int[] a = new int[]{1, 2, 3, 4, 5};
+        int[] e = new int[]{1, 2, 1, 3, 2, 4, 2, 5};
         new L717().longestPathWithSameValue(a, e);
     }
 }
@@ -91,10 +91,16 @@ class BinaryTreeNode {
 }
 
 class BinaryTree {
-/*    private BinaryTreeNode head;
-    public BinaryTree(BinaryTreeNode head) {
-        this.head = head;
-    }*/
+    /*    private BinaryTreeNode head;
+        public BinaryTree(BinaryTreeNode head) {
+            this.head = head;
+        }*/
+    int[] counts;
+    int pos = 0;
+
+    public BinaryTree(int[] counts) {
+        this.counts = counts;
+    }
 
     public void preorderTraversal(BinaryTreeNode node) {
         if (null == node) {
@@ -109,7 +115,19 @@ class BinaryTree {
         if (null == node) {
             return;
         }
+
         inorderTraversal(node.lchild);
+        if (null != node.lchild && node.lchild.value == node.value) {
+            counts[pos]++;
+        } else {
+            pos++;
+        }
+        if (null != node.rchild && node.rchild.value == node.value) {
+            counts[pos]++;
+        } else {
+            pos++;
+        }
+
         System.out.println(node.value);
         inorderTraversal(node.rchild);
     }
