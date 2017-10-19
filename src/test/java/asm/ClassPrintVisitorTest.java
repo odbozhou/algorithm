@@ -44,6 +44,8 @@ public class ClassPrintVisitorTest {
         return cw.toByteArray();
     }
 
+
+
 /*    private static byte[] genHelloWorld() {
         ClassWriter cw = new ClassWriter(0);
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT ,
