@@ -1,0 +1,232 @@
+Option Explicit
+
+
+
+Sub mergeeveryonexls() '将多个工作簿下的工作表依次对应合并到本工作簿下的工作表，即第一张工作表对应合并到第一张，第二张对应合并到第二张……
+
+On Error Resume Next
+
+Dim x As Variant, x1 As Variant, w As Workbook, bsh As Worksheet, ssh As Worksheet
+
+Dim t As Workbook, ts As Worksheet, i As Integer, l As Integer, h As Long, wl As Integer, wh As Long
+
+Application.ScreenUpdating = False
+
+Application.DisplayAlerts = False
+
+'x = Application.GetOpenFilename(FileFilter:="Excel文件 (*.xls; *.xlsx),*.xls; *.xlsx,所有文件(*.*),*.*", Title:="Excel选择", MultiSelect:=True)
+
+Set t = ThisWorkbook
+
+
+ For i = 1 To t.Sheets.Count
+
+
+    If "基础数据源" = t.Sheets(i).Name Then
+
+    Set bsh = t.Sheets(i)
+    End If
+
+    If t.Sheets(i).Name = "Sheet10" Then
+
+    Set ssh = t.Sheets(i)
+    End If
+
+ Next
+
+
+
+ MsgBox ssh.Name
+
+
+ l = ssh.UsedRange.SpecialCells(xlCellTypeLastCell).Column
+
+ h = ssh.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+
+MsgBox l
+
+ wl = bsh.UsedRange.SpecialCells(xlCellTypeLastCell).Column
+
+ wh = bsh.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+
+ MsgBox wh
+ For i = 2 To 2
+
+ ssh.Rows(i).Copy bsh.Cells(wh + 2, 1)
+
+ Next
+
+
+
+Application.ScreenUpdating = True
+
+Application.DisplayAlerts = True
+
+End Sub
+
+
+
+Sub mergeeveryonexlstoonesheet()  '将多个工作簿下的工作表全部插入当前工作表sheet1中
+
+On Error Resume Next
+
+Dim x As Variant, x1 As Variant, w As Workbook, wsh As Worksheet
+
+Dim t As Workbook, ts As Worksheet, i As Integer, l As Integer, h As Long, wshl As Integer, wshh As Long, j As Integer, pos As Integer, wordName As String
+
+Application.ScreenUpdating = False
+
+Application.DisplayAlerts = False
+
+x = Application.GetOpenFilename(FileFilter:="Excel文件 (*.xls; *.xlsx),*.xls; *.xlsx,所有文件(*.*),*.*", Title:="Excel选择", MultiSelect:=True)
+
+Set t = ThisWorkbook
+
+For Each x1 In x
+
+If x1 <> False Then
+
+ Set w = Workbooks.Open(x1)
+
+ For i = 1 To w.Sheets.Count
+
+ '不新建sheet页 If i > t.Sheets.Count Then t.Sheets.Add After:=t.Sheets(t.Sheets.Count)
+
+ Set ts = t.Sheets(1)
+
+ Set wsh = w.Sheets(i)
+
+ l = ts.UsedRange.SpecialCells(xlCellTypeLastCell).Column
+
+ h = ts.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+
+ wshl = wsh.UsedRange.SpecialCells(xlCellTypeLastCell).Column
+
+ wshh = wsh.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+
+ pos = InStr(1, w.Name, "(")
+
+ If pos > 1 Then
+
+ wordName = Left(w.Name, pos - 1)
+
+ Else
+
+ wordName = Left(w.Name, InStr(1, w.Name, ".") - 1)
+
+ End If
+
+ If l = 1 And h = 1 And ts.Cells(1, 1) = "" Then
+
+ wsh.UsedRange.Copy ts.Cells(1, 1)
+
+
+ For j = 1 To wshh
+
+ ts.Range(CNtoW(wshl + 1) & j).Value = wordName
+
+ ts.Range(CNtoW(wshl + 1 + 1) & j).Value = wsh.Name
+
+ Next
+
+ Else
+
+ wsh.UsedRange.Copy ts.Cells(h + 1, 1)
+
+  For j = h + 1 To h + wshh
+
+ ts.Range(CNtoW(wshl + 1) & j).Value = wordName
+
+ ts.Range(CNtoW(wshl + 1 + 1) & j).Value = wsh.Name
+
+ Next
+
+ End If
+
+ Next
+
+ w.Close
+
+End If
+
+Next
+
+Application.ScreenUpdating = True
+
+Application.DisplayAlerts = True
+
+End Sub
+
+
+Function CNtoW(ByVal num As Long) As String
+    CNtoW = Replace(Cells(1, num).Address(False, False), "1", "")
+End Function
+
+
+Sub addtwocolnum()   'add tow colnum to every sheet
+
+On Error Resume Next
+
+Dim x As Variant, x1 As Variant, w As Workbook, wsh As Worksheet
+
+Dim t As Workbook, ts As Worksheet, i As Integer, wshl As Integer, wshh As Long, j As Integer
+
+Application.ScreenUpdating = False
+
+Application.DisplayAlerts = False
+
+x = Application.GetOpenFilename(FileFilter:="Excel文件 (*.xls; *.xlsx),*.xls; *.xlsx,所有文件(*.*),*.*", Title:="Excel选择", MultiSelect:=True)
+
+Set t = ThisWorkbook
+
+For Each x1 In x
+
+If x1 <> False Then
+
+ Set w = Workbooks.Open(x1)
+
+ For i = 1 To w.Sheets.Count
+
+ '不新建sheet页 If i > t.Sheets.Count Then t.Sheets.Add After:=t.Sheets(t.Sheets.Count)
+
+ Set ts = t.Sheets(1)
+
+ Set wsh = w.Sheets(i)
+
+ wsh.Cells(1, 1) = "test"
+
+ wshl = wsh.UsedRange.SpecialCells(xlCellTypeLastCell).Column
+
+ wshh = wsh.UsedRange.SpecialCells(xlCellTypeLastCell).Row
+
+ For j = 1 To wshh
+
+    wsh.Range("M" + j).Select
+
+    ActiveCell.FormulaR1C1 = w.Name
+
+    wsh.Range("N" + j).Select
+
+    ActiveCell.FormulaR1C1 = wsh.Name
+
+ Next
+
+ Next
+
+ w.Close
+
+End If
+
+Next
+
+Application.ScreenUpdating = True
+
+Application.DisplayAlerts = True
+
+End Sub
+
+
+
+
+
+
