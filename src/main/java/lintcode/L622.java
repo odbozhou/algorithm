@@ -11,7 +11,7 @@ public class L622 {
         int low = 1;
         int high = n;
         int mid = 0;
-        while (low <= high) {
+/*        while (low <= high) {
             mid = (low + high) >>> 1;
             if (-1 == guess(mid)) {
                 high = mid - 1;
@@ -20,7 +20,7 @@ public class L622 {
             } else {
                 return mid;
             }
-        }
+        }*/
         return -(low + 1);
     }
 }

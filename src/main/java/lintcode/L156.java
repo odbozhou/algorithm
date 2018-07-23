@@ -3,6 +3,7 @@ package lintcode;
 import lintcode.util.Interval;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,31 @@ import java.util.List;
  * Created by jiajia on 2017/10/17.
  */
 public class L156 {
+
+/*    public static Comparator<Interval> comparator = new Comparator<Interval>() {
+        @Override
+        public int compare(Interval o1, Interval o2) {
+            return o1.start - o2.start;
+        }
+    };*/
+
     public List<Interval> merge(List<Interval> intervals) {
+        intervals.sort(Comparator.comparing(i -> i.start));
+        Interval last = null;
+        List<Interval> resultInterval = new LinkedList<>();
+        for (Interval interval : intervals) {
+            if (null == last || last.end <= interval.start) {
+                last = interval;
+                resultInterval.add(last);
+            } else {
+                last.end = Math.max(last.end, interval.end);
+            }
+        }
+        return resultInterval;
+    }
+
+
+    public List<Interval> merge1(List<Interval> intervals) {
         List<Pixel> pixels = new LinkedList<Pixel>();
         for (Interval interval : intervals) {
             pixels.add(new Pixel(interval.start, 1));
