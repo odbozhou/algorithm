@@ -14,43 +14,51 @@ import java.util.List;
 public class Queue {
     private int size = 2;
     private List<Integer> queues = new ArrayList<>(size);
+    private Object lock1 = new Object();
+    private Object lock2 = new Object();
 
-    synchronized public void push(Integer x) {
-        while (queues.size() == size) {
+    public void push(Integer x) {
+        synchronized (lock1) {
+            while (queues.size() == size) {
+                try {
+                    System.out.println(Thread.currentThread().getName() + " push wait");
+                    lock1.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
-                System.out.println(Thread.currentThread().getName() + " push wait");
-                this.wait();
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            queues.add(x);
+            System.out.println(Thread.currentThread().getName() + " push " + x);
+            lock1.notifyAll();
         }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        queues.add(x);
-        System.out.println(Thread.currentThread().getName() + " push " + x);
-        this.notifyAll();
     }
-    synchronized public Integer pop() {
-        while (queues.size() == 0) {
+
+    public Integer pop() {
+        Integer x;
+        synchronized (lock1) {
+            while (queues.size() == 0) {
+                try {
+                    System.out.println(Thread.currentThread().getName() + " pop wait");
+                    lock1.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
-                System.out.println(Thread.currentThread().getName() + " pop wait");
-                this.wait();
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            x = queues.get(0);
+            System.out.println(Thread.currentThread().getName() + " pop " + x);
+            queues.remove(0);
+            lock1.notifyAll();
         }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Integer x = queues.get(0);
-        System.out.println(Thread.currentThread().getName() + " pop " + x);
-        queues.remove(0);
-        this.notifyAll();
         return x;
     }
 
@@ -58,7 +66,7 @@ public class Queue {
         Queue queue = new Queue();
         Customer consumer = new Customer(queue);
         Provider provider = new Provider(queue);
-        int size = 1;
+        int size = 3;
         Thread[] consumerThreads = new Thread[size];
         Thread[] providerThreads = new Thread[size];
         for (int i = 0; i < size; i++) {
@@ -72,7 +80,7 @@ public class Queue {
     }
 }
 
-class Customer implements Runnable{
+class Customer implements Runnable {
 
     private Queue queue;
 
@@ -95,6 +103,7 @@ class Provider implements Runnable {
     public Provider(Queue queue) {
         this.queue = queue;
     }
+
     @Override
     public void run() {
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
