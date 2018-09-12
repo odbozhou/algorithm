@@ -11,12 +11,17 @@ public class Test {
         Queue queue = new Queue();
         Consumer consumer = new Consumer(queue);
         Provider provider = new Provider(queue);
-        int size = 1;
+        int size = 10;
         Thread[] consumerThreads = new Thread[size];
         Thread[] providerThreads = new Thread[size];
         for (int i = 0; i < size; i++) {
             consumerThreads[i] = new Thread(consumer);
-            consumerThreads[i] = new Thread(provider);
+            providerThreads[i] = new Thread(provider);
+        }
+
+        for (int i = 0; i < size; i++) {
+            consumerThreads[i].start();
+            providerThreads[i].start();
         }
 
     }

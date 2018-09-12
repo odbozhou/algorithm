@@ -23,12 +23,14 @@ public class Queue {
     public void push(Integer x) {
         lock.lock();
         try {
-            while (queues.size() == 10) {
+            while (queues.size() == 2) {
+                System.out.println(Thread.currentThread().getName() + " push " + "await");
                 condition.await();
             }
             queues.add(x);
-            System.out.println("push " + x);
+            System.out.println(Thread.currentThread().getName() + " push " + x);
             pos++;
+            Thread.sleep(1000);
             condition.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -42,17 +44,20 @@ public class Queue {
         Integer x = null;
         try {
             while (queues.size() == 0) {
+                System.out.println(Thread.currentThread().getName() + " pop " + "await");
                 condition.await();
             }
-            x = queues.get(pos);
-            System.out.println("pop " + x);
-            queues.remove(pos--);
+            x = queues.get(pos - 1);
+            System.out.println(Thread.currentThread().getName() + " pop " + x);
+            queues.remove(pos - 1);
+            pos--;
+            Thread.sleep(1000);
             condition.signalAll();
             return x;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("pop finally");
+//            System.out.println("pop finally");
             lock.unlock();
         }
         System.out.println("last return");

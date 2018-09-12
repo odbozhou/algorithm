@@ -16,6 +16,10 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        queue.pop();
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            queue.pop();
+//            System.out.println(Thread.currentThread().getName() + " return value " + queue.pop());
+//            System.out.println(Thread.currentThread().getName() + " return value " + queue.pop());
+        }
     }
 }

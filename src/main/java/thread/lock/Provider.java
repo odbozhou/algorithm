@@ -18,7 +18,8 @@ public class Provider implements Runnable {
 
     @Override
     public void run() {
-        Integer x = new Random().nextInt();
-        queue.push(x);
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            queue.push(i);
+        }
     }
 }
