@@ -17,21 +17,22 @@ public class Queue {
     private int size = 10;
     private int pos = 0;
     private List<Integer> queues = new ArrayList<>(size);
-    private Lock lock = new ReentrantLock(true);
-    private Condition condition = lock.newCondition();
+    private Lock lock = new ReentrantLock(false);
+    private Condition pushCondition = lock.newCondition();
+    private Condition popCondition = lock.newCondition();
 
     public void push(Integer x) {
         lock.lock();
         try {
-            while (queues.size() == 2) {
+            while (queues.size() == 1) {
                 System.out.println(Thread.currentThread().getName() + " push " + "await");
-                condition.await();
+                pushCondition.await();
             }
             queues.add(x);
             System.out.println(Thread.currentThread().getName() + " push " + x);
             pos++;
             Thread.sleep(1000);
-            condition.signalAll();
+            popCondition.signal();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -45,14 +46,14 @@ public class Queue {
         try {
             while (queues.size() == 0) {
                 System.out.println(Thread.currentThread().getName() + " pop " + "await");
-                condition.await();
+                popCondition.await();
             }
             x = queues.get(pos - 1);
             System.out.println(Thread.currentThread().getName() + " pop " + x);
             queues.remove(pos - 1);
             pos--;
             Thread.sleep(1000);
-            condition.signalAll();
+            pushCondition.signal();
             return x;
         } catch (InterruptedException e) {
             e.printStackTrace();

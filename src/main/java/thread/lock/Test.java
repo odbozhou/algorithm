@@ -11,7 +11,7 @@ public class Test {
         Queue queue = new Queue();
         Consumer consumer = new Consumer(queue);
         Provider provider = new Provider(queue);
-        int size = 10;
+        int size = 2;
         Thread[] consumerThreads = new Thread[size];
         Thread[] providerThreads = new Thread[size];
         for (int i = 0; i < size; i++) {
