@@ -27,6 +27,7 @@ public class MyCyclicBarrier {
 
     public static void main(String[] args) {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+
         MyCyclicBarrier myCyclicBarrier = new MyCyclicBarrier(4, new Runnable() {
             @Override
             public void run() {
@@ -37,7 +38,15 @@ public class MyCyclicBarrier {
         threadPoolExecutor.submit(new PrepareRunnable("小红", myCyclicBarrier));
         threadPoolExecutor.submit(new PrepareRunnable("小黑", myCyclicBarrier));
         threadPoolExecutor.submit(new PrepareRunnable("小白", myCyclicBarrier));
-
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(threadPoolExecutor.getActiveCount());
+        threadPoolExecutor.shutdown();
+        System.out.println("finish");
+//        System.exit(1);
 
     }
 
